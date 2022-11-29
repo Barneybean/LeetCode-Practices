@@ -46,8 +46,5 @@ def isValid(s: str) -> bool:
                 else:
                     return False
         # after for loop, the stack should be empty to return True
-        if stack:
-            return False
-        else:
-            return True
+        return len(stack) == 0
 
