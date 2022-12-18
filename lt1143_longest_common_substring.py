@@ -23,8 +23,8 @@
 # Output: 0
 # Explanation: There is no such common subsequence, so the result is 0.
 
-#method 1: Recursion with Memoization O(?)
-class Solution:        
+#method 1: Recursion with Memoization O(too large to run), out of memory
+class SolutionRecursion:        
     def longestCommonSubsequence(self, s1: str, s2: str) -> int:
     
         m = len(s1)
@@ -56,8 +56,8 @@ n = 3
 print([[-1 for _ in range(n + 1)] for _ in range(m + 1)])
 
 # %%
-# method 2: Recursion witout memoization O(mn),
-class Solution: 
+# method 2: Recursion witout memoization O(mn), cons: use too much memory
+class SolutionRecursionLCS: 
     def longestCommonSubsequence(self, s1: str, s2: str) -> int: 
         #1. lcs(i, j): i j is the index of each letter in text1 and text2
             # base case: if text1 reaches end or text2 reaches end: return 0 
@@ -75,3 +75,25 @@ class Solution:
                 self.recursion(text1, text2, i+1,j), 
                 self.recursion(text1, text2, i,j+1)
                 )
+
+# Dynamic Programing O(mn), best in memory
+class SolutionDP:
+    def longestCommonSubsequence(self, s1: str, s2: str) -> int: 
+        m = len(s1)
+        n = len(s2)
+        memo = [[0 for i in range(n+1)] for j in range(m+1)]
+        # print(memo)
+        for row in range(m):
+            for col in range(n):
+                if s1[row] == s2[col]:
+                    memo[row+1][col+1] = 1 + memo[row][col]
+                else:
+                    memo[row+1][col+1] = max(memo[row+1][col], memo[row][col+1])
+        return memo[m][n]
+
+s = SolutionDP()
+s1 = 'stone'
+s2 = 'longest'
+s.longestCommonSubsequence(s1, s2)
+
+# %%
