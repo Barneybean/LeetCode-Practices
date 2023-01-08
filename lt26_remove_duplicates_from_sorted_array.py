@@ -10,6 +10,7 @@
 
 class Solution:
     def removeDuplicates(self, nums: List[int]) -> int:
+        
         nums[:] = sorted(list(set(nums)))
-
+        # this will ensure it is O(1)
 #or use while 
