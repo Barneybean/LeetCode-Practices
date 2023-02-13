@@ -18,16 +18,23 @@
 
 class Solution:
     def rob(self, nums: List[int]) -> int:
+        #4liner
+        dp1, dp2 = 0, 0
+        for n in nums:
+            dp1, dp2 = dp2, max(dp2, dp1+n)
+        return dp2
+
+
         #use DP
-        if nums == []: return 0
-        # nums =[1,2,3,1]
-        # dp = [0,1,0,0,0], calculate the max from 1st and 2nd house
-        dp = [0]* (len(nums)+1)
-        dp[1] = nums[0]
-        for i in range(1, len(nums)):
-            dp[i+1] = max(dp[i], (dp[i-1] + nums[i]))
-            print(i, dp)
-        return dp[-1]
+        # if nums == []: return 0
+        # # nums =[1,2,3,1]
+        # # dp = [0,1,0,0,0], calculate the max from 1st and 2nd house
+        # dp = [0]* (len(nums)+1)
+        # dp[1] = nums[0]
+        # for i in range(1, len(nums)):
+        #     dp[i+1] = max(dp[i], (dp[i-1] + nums[i]))
+        #     print(i, dp)
+        # return dp[-1]
 
 #      [1, 2, 3, 1, 2, 100]
 
