@@ -29,4 +29,12 @@ class Solution:
                 return [i,d[r]]
             else:
                 d[nums[i]]=i
-            
+
+#%%     
+#use python maplotlib to plot the graph
+import matplotlib.pyplot as plt
+plt.plot([1,2,3,4])
+plt.ylabel('some numbers')
+plt.show()
+
+# %%

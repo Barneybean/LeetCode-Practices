@@ -23,20 +23,26 @@
 
 class Solution:
     def maxSubArray(self, nums: List[int]) -> int:
+        if not nums: 
+            return 0
+        # in case of all negatives or 0
+        # [-1, -2, 0]
+        if max(nums) <= 0:
+            return max(nums)
 
 #DP
-        # dp = [0 for x in nums]
-        # dp[0] = nums[0]
-        # # each position holds the max value of sub arrarys starting from this pos
-        # for i in range(1,len(nums)):
-        #     dp[i] = max(dp[i-1]+nums[i], nums[i])
-        # # dp:  [-2,1,-2,4,3, 5,6, 1,5] save the max in dp then add next 
-        # # number in nums, if new number is larger then nums[i] then keep, 
-        # # else start with new num
-        # # nums:[-2,1,-3,4,-1,2,1,-5,4]
-        # return max(dp)
+        dp = [0 for x in nums]
+        dp[0] = nums[0]
+        # each position holds the max value of sub arrarys starting from this pos
+        for i in range(1,len(nums)):
+            dp[i] = max(dp[i-1]+nums[i], nums[i])
+        # dp:  [-2,1,-2,4,3, 5,6, 1,5] save the max in dp then add next 
+        # number in nums, if new number is larger then nums[i] then keep, 
+        # else start with new num
+        # nums:[-2,1,-3,4,-1,2,1,-5,4]
+        return max(dp)
          
-# pointer Fastest O(n)
+# pointer 
         max_sub = nums[0]
         cur_sum = 0 
         # cumulate sum, if cum_sum < 0 then start with 0, when cum_sum is higher than max_sub then use this number as max 
