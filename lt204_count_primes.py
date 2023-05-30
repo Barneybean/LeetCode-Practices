@@ -23,8 +23,46 @@ class Solution(object):
         :rtype: int
         """
 
-        # Sieve of Eratosthenes
+        #option 1 easy to understand
+        if n <= 2: 
+            return 0 
+        
+        primes = [True] * n 
+        primes[0] = primes[1] = False # 1, 2 is not prime
 
+        for num in range(2, n):
+            if primes[num]: # some numbers are marked in the following for loop
+                # not prime: start with 2* number every n*number is not prime
+                for not_prime in range(2*num, n, num):
+                    primes[not_prime] = False
+
+        #finally, those not marked False are prime, True = 1
+        return sum(primes) 
+
+        # # brute force with memoization
+        # prime = set()
+        # res = 0
+        # def is_prime(num, prime):
+        #     if num in prime: # no need to calculate again
+        #         return True
+        #     if num > 3: 
+        #         # print(list(range(2, round((num**0.5))+1)))
+        #         for i in range(2, round((num**0.5))+1):
+        #             if num % i == 0: 
+        #                 return False
+        #     return True
+
+        # for ele in range(2, n): 
+        #     if is_prime(ele, prime):
+        #         res += 1
+        
+        # return res
+
+
+
+
+
+        #Option3: Sieve of Eratosthenes
         # We are only interested in numbers LESS than the input number
         # exit early for numbers LESS than 2; (two is prime)
         if n < 2:

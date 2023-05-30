@@ -20,22 +20,36 @@
 
 class Solution:
     def swapPairs(self, head: Optional[ListNode]) -> Optional[ListNode]:
-        # create a dummy head 
+        # # create a dummy head to return dummy.next as new head of result 
+
+        # dummy (prev) -> head (cur/first) ->  head.next(cur.next/second)->
         dummy = ListNode(0)
-        dummy.next = head 
-        cur = head 
-        prev = dummy 
-        while cur and cur.next : 
-            first = cur
-            second = cur.next
-            prev.next = second 
-            first.next = second.next 
-            second.next = first
+        dummy.next = head
+        prev = dummy
+        cur = head
+        
+        # option 1
+        # while cur and cur.next:
+        #     first = cur # hold as temp
+        #     second = cur.next # hold as temp
+        #     prev.next = second # connect prev to second 
+        #     first.next = second.next # connect first to jump over second
+        #     prev.next.next = first # now it is prev -> second -> first -> originalsecond.next
 
-            # now it is prev-second-first-...
-            prev = first
-            cur = first.next
+        #     prev = first # now the first not cur
+        #     cur = prev.next
 
-        return dummy.next # need to have dummy besides of prev to hold all values 
-    
-        return head
+        # option 2
+        while cur and cur.next:
+            prev.next = cur.next # connect prev to second 
+            cur.next = cur.next.next # connect first to jump over second
+            prev.next.next = cur # now it is prev -> second -> first -> originalsecond.next
+            # print(cur)
+            # print()
+            # print(prev)
+            prev = prev.next.next # jump two node after, last node of the previous swap
+            # or prev = cur
+            cur = prev.next # cur needs to be the first node to swap
+
+        return dummy.next
+        

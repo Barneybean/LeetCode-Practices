@@ -17,19 +17,26 @@ class Solution:
         # idea:  if sum[i]−sum[j]=k, the sum of elements lying between indices i and j is k.
         if nums == []:
             return 0
-        h = {0:1} # if cum sum = k then count as 1 
-        s = 0
-        target = 0
+
+        h = {0:1} # if cum sum = k then count as 1 [1, 3] k = 3, then 3 - 3 = 0 
+        sum = 0
+        target = 0 
         res = 0 
-
+        
         for n in nums: 
-            s += n 
-            target = s - k
-            res += h.get(s-k, 0) 
-            # h.get(s, 1) # default to 1 if s not in hashmap
-            h[s] = h.get(s,0)+1
-        return res 
+            sum += n 
+            target = sum - k 
+            
+            if target in h: 
+                res += h[target] # add all possible result from previous
+        # ie [1,2,3] -> res = 2, then [1,2,3, 1, -1], same sum so res += 2 because 1+-1=0
+            if sum in h:
+                h[sum] += 1 # cum sum count + 1
+            else: 
+                h[sum] = 1 # new cum sum count = 1
 
+            # this if else is equivalend to h[sum] += h.get(sum, 0) + 1 
+        return res
 
         # X method 2: using prefix sum O(n2)
         # idea: two pointers, difference = k then it is satisfied
