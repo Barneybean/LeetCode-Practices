@@ -10,7 +10,27 @@
 
 class Solution:
     def removeDuplicates(self, nums: List[int]) -> int:
-        
+        # option 1 
         nums[:] = sorted(list(set(nums)))
         # this will ensure it is O(1)
-#or use while 
+
+        # two pointer
+        #option 2 or use while 
+        if len(nums) == 0: return 0
+
+        pointer = 1
+
+        for i in range(1, len(nums)):
+            # if element == next element then move on, if != then move the element at i to element at pointer 
+            if nums[i] != nums[i-1]:
+                nums[pointer] = nums[i]
+                pointer += 1 
+            
+        return pointer 
+
+        # p = 1, i = 1, n[1] != n[0] 2!=1 [1,2,2,3,4]
+        # p = 2, i = 2, n[2] == n[1] 2==2 [1,2,2,3,4] p no change 
+        # p = 2, i = 3, n[3] != n[2] 3!=2 [1,2,3,3,4] n[2] = n[3]
+
+
+

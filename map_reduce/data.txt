@@ -1,0 +1,5 @@
+UserID    URL            timestamp_ms
+1         www.baidu.com   123213
+1         www.tiktok.com  312321
+2         www.qq.com      321312
+3         www.google.com  321321

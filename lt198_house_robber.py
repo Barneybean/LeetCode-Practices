@@ -18,30 +18,46 @@
 
 class Solution:
     def rob(self, nums: List[int]) -> int:
-        #4liner
-        dp1, dp2 = 0, 0
+        class Solution:
+    def rob(self, nums: List[int]) -> int:
+        if nums == []: return 0
+        
+        #option 1
+        max_rob1, max_rob2 = 0, 0 #add two houses before the list 
+
+        # example [rob1=0, rob2=0, n, n+1, n+2]
+        # at position n, the best it can get is the max of rob1+n or just rob2
+
         for n in nums:
-            dp1, dp2 = dp2, max(dp2, dp1+n)
-        return dp2
+            max_rob_at_n = max(max_rob1 + n, max_rob2)
+            # max at n+2 = max(max_rob at n, max_rob at n+1) so move the two pointer down
+            max_rob1 = max_rob2
+            max_rob2 = max_rob_at_n
+        
+        return max_rob2 # or max_rob_at_n
 
+        # option 2 use DP
+        # draw a brute force way
+        # nums = [1, 2, 3, 1, 4, 5]
+        # two type of starts: 
+        # rob 1: then nums[0] + rob[0+2:n]
+        # rob 2: then nums[1] + rob[1+2:n]
 
-        #use DP
-        # if nums == []: return 0
-        # # nums =[1,2,3,1]
-        # # dp = [0,1,0,0,0], calculate the max from 1st and 2nd house
-        # dp = [0]* (len(nums)+1)
-        # dp[1] = nums[0]
-        # for i in range(1, len(nums)):
-        #     dp[i+1] = max(dp[i], (dp[i-1] + nums[i]))
-        #     print(i, dp)
-        # return dp[-1]
+        # then it becomes DP problem 
+        # in rob 1: rob[0+2:n] has same two possible solutions until the end 
+        # so rob = max((num[0] + rob[0+2: n]), (num[1]+rob[3:n]))
 
-#      [1, 2, 3, 1, 2, 100]
+        # at the end, we are comparing whether the rob1 and rob2 start
+        
+        if nums == []: return 0
+        # nums =[1,2,3,1]
+        # dp = [0,1,0,0,0], calculate the max from 1st and 2nd house
+        dp = [0]* (len(nums)+1)
+        dp[1] = nums[0]
+        for i in range(1, len(nums)):
+            dp[i+1] = max(dp[i], (dp[i-1] + nums[i])) # {max_rob at i (dp[i])} or {max_rob at i-1 + current house value}
+            print(i, dp)
+        return dp[-1]
 
-# 1 [0, 1, 2, 0, 0, 0, 0]
-# 2 [0, 1, 2, 4, 0, 0, 0]
-# 3 [0, 1, 2, 4, 4, 0, 0]
-# 4 [0, 1, 2, 4, 4, 6, 0]
-# 5 [0, 1, 2, 4, 4, 6, 104]
 
 
