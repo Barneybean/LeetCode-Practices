@@ -20,35 +20,42 @@ class Solution:
 
         start = sorted([m[0]for m in intervals])
         end = sorted([m[1] for m in intervals])
-
         #start = [0, 5, 15, 20, 35]
         #end =   [10, 20, 30, 40, 50]
         
         room = 0
+        max_room = 0
         # use two pointers 
         s, e = 0, 0
-       
-        # option 1:
-        # use while loop when using 2 pointer so you can stop the first pointer
-        # while s < len(start):
-        #     if start[s] >= end[e]: 
-        #         e += 1 # check next meeting end
-        #     else:
-        #         room += 1
-        #     s += 1 # move to next meeting start
-            
-        # option 2:
-        max_room = 0
-        while s < len(start):
-            if start[s] < end[e]:
-                room += 1 
-                s += 1 
-            else:
-                room -= 1 # a meeting ends
-                e += 1 # check next meeting end
-            max_room = max(room, max_room)
 
-        return max_room 
+        #Option 1
+        while s < len(start):
+            if start[s] < end[e]: # start is before current end 
+                room += 1
+                s += 1 # only increment start here 
+            elif start[s] > end[e]: # new meeting start after cur meeting end 
+                e += 1 # end current meeting 
+                room -= 1 # no change becuase end one start another 
+            else: # faster if split out == case 
+                s += 1
+                e += 1
+                # if end and start at the same time, then no change in room 
+            max_room = max(max_room, room)
+
+        return max_room
+
+
+        # Option 2
+        # while s < len(start):
+        #     if start[s] < end[e]:
+        #         room += 1 
+        #         s += 1 
+        #     else:
+        #         room -= 1 # a meeting ends
+        #         e += 1 # check next meeting end
+        #     max_room = max(room, max_room)
+
+        # return max_room 
 
 
         # --------------------------
